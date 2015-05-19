@@ -1,0 +1,49 @@
+Campusfamz API v1 Documentation (PHP SDK)
+
+HOW TO INSTALL THE SDK
+- Copy the "campusfamz-PHP-SDK-v1-1.0" folder to your home directory.
+- Locate the key.php file in the "campusfamz-PHP-SDK-v1-1.0" and edit the appId & appKey as appropriate.
+
+USING THE API
+- Include the campusfamz SDK on your scripts using "require_once('campusfamz-PHP-SDK-v1-1.0/campusfamz.php')".
+- Instatiate the SDK using "$campusfamz = new CFapi;".
+- Use the $campusfamz variable to access the API anywhere in your script.
+
+GET REQUESTS
+- $campusfamz->get("*name_of_the_function*", "*param1*", "*param2(optional)*", "*page(optional)*");
+
+*sample
+$response = $campusfamz->get("profile_info", "1"); 
+// gets all profile info of user with ID of 1
+
+$response = $campusfamz->get("user_topics", "1", "", "page=1"); 
+// gets all page 1 forum topics of user with ID of 1
+
+
+POST REQUESTS
+- $campusfamz->post("*name_of_the_function*", "*array_of_post_data*");
+
+*sample
+$data = array("username" => "abcd", "password" => "1234");
+$response = $campusfamz->post("user_reg", $data);
+// registers a new user with username->abcd and password->1234
+
+
+PUT REQUESTS
+- $campusfamz->put("*name_of_the_function*", "*param_to_update*", "*array_of_put_data*");
+
+*sample
+$data = array("username" => "abcdef", "password" => "123456");
+$response = $campusfamz->put("user_info", "1", $data);
+// update the username and password of a user with ID of 1 with username->abcd and password->1234
+
+
+DELETE REQUESTS
+- $campusfamz->delete("*name_of_the_function*", "*param_to_delete*");
+
+*sample
+$response = $campusfamz->delete("delete_post", "1234");
+// delete a forum post with the ID 1234
+
+
+VERSION FUNCTION NAMES:-
