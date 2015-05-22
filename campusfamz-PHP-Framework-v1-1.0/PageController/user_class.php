@@ -251,8 +251,8 @@ function subscribe_user($email){
 	
 	if($tot != 0){
 		
-		$response["success"] = 0;
-		$response["count"] = 0;
+		$response["success"] = 1;
+		$response["count"] = 1;
         $response["message"] = "user already subsribed";
 		
 	}else{

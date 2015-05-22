@@ -11,19 +11,6 @@ $page_name = end($part_url);
 
 $browser_t = "web";
 
-if ($page_name=='' && !strpos($current_page_uri, 'api')) {
-	include PHP_ROOT.$browser_t.'/index.php';
-	}
-elseif (strpos($current_page_uri, 'index')) {
-	include PHP_ROOT.$browser_t.'/index.php';
-	}
-elseif (strpos($current_page_uri, 'api')) {
 	include PHP_ROOT.$browser_t.'/api.php';
-    }
-else{
-	include PHP_ROOT.$browser_t.'/404.php';
-	}
-	
-
 ?>
 <script type="text/javascript" src="<?php echo CF_URL; ?>web/js/jquery.min.js"></script>

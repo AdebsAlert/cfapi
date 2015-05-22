@@ -7,7 +7,7 @@ class feed_class {
  }
 
 
-function send_shout($user_id, $shout){
+function send_shout($user_id, $shout, $privacy){
 	 $db = $this->registry->getObject('database');
 	
 	$today = date("Y-m-d");
@@ -43,7 +43,8 @@ $db->my_sql("INSERT INTO trends (trend, date) VALUES ('".$trend."', now())", 1);
 	}else{
 	}
 	
-	$db->my_sql("INSERT INTO shout (matric, shouting, time, active, via, privacy) VALUES ('".$user_id."', '".$shout."', now(), '2', '".$via."', '".$privacy."')", 1);
+	$db->my_sql("INSERT INTO shout (matric, shouting, time, active, via, privacy) VALUES 
+	('".$user_id."', '".$shout."', now(), '2', '".$via."', '".$privacy."')", 1);
 	    $response["success"] = 1;
 		$response["count"] = 1;
         $response["message"] = "shout posted successfully";
@@ -52,7 +53,8 @@ $db->my_sql("INSERT INTO trends (trend, date) VALUES ('".$trend."', now())", 1);
 	}else{ // shout is empty
 	
 	    $response["success"] = 0;
-		$response["count"] = 0;$response["message"] = "field is empty";
+		$response["count"] = 0;
+		$response["message"] = "field is empty";
 		}
 		
 		return $response;

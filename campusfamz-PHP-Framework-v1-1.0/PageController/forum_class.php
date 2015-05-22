@@ -135,7 +135,7 @@ function topic_listing($cat_id, $ext, $page){
 }
 
 
-function topic_details($topic_id){
+function topic_info($topic_id){
 	$db = $this->registry->getObject('database');
 	$photo = $this->registry->getObject('photo_class');
 	
@@ -151,7 +151,7 @@ function topic_details($topic_id){
 		$forum_posts = $t['post_text'];
 	}
 	
-	$photo_response = $photo->get_photos("forum", $topic_id);
+	$photo_response = $photo->get_photos($topic_id, "forum");
 	
 	$forum_pics = $photo_response['image_link'];
 	$forum_ext_pics = $photo_response['image_ext_link'];
@@ -204,7 +204,6 @@ function topic_details($topic_id){
 function topic_view($title){
 	$db = $this->registry->getObject('database');
 	$forum = $this->registry->getObject('forum_class');
-	$photo = $this->registry->getObject('photo_class');
 	
 	$title = str_replace("-", " ", $title);
 	
@@ -221,7 +220,7 @@ function topic_view($title){
 	}
 	
 	
-	$forum_response = $forum->topic_details($topic_id);
+	$forum_response = $forum->topic_info($topic_id);
 	
 	$cat_id = $forum_response['topic_cat_id'];
 	$cat_name = $forum_response['topic_cat_name'];
@@ -386,22 +385,6 @@ function forum_cats(){
 	 return $response;
 }
 
-
-function forum_cat_name($cat_id){
-	$db = $this->registry->getObject('database');
-	
-	//get cat name
-	$db->my_sql("SELECT cat_type FROM forum_cat WHERE cat_id='".$cat_id."'");
-	foreach($db->get_rows() as $c){
-		$cat_name = $c['cat_type'];
-	}
-
-	   $response["success"] = 1;
-	   $response["count"] = $db->num_rows();
-	   $response["cat_name"] = $cat_name;	 
-	
-	 return $response;
-}
 
 
 function forum($property){

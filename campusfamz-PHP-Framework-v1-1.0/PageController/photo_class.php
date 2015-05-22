@@ -76,21 +76,19 @@ function cover_photo($user_id){
    $response["count"] = 0;
    $response["image_link"] = "".IMAGE_PATH."icon/defaultcover.jpg";	
 	}	
-	return $response;
-
-		 
- }
+	return $response;	 
+}
 
 
 
 function upload_photo($user_id, $type, $error, $size, $name, $tmp, $caption, $loc, $album_name, $privacy){
         $db = $this->registry->getObject('database');
 	  
-$allowedExts = array("jpg", "jpeg", "gif", "png");
-$extension = end(explode(".", $name));
+    $allowedExts = array("jpg", "jpeg", "gif", "png");
+    $extension = end(explode(".", $name));
 
-if ((($type == "image/jpeg") || ($type == "image/jpg") || ($type == "image/gif") || ($type == "image/png")) && ($size < 1500000)){
-  if ($error > 0){
+    if ((($type == "image/jpeg") || ($type == "image/jpg") || ($type == "image/gif") || ($type == "image/png")) && ($size < 1500000)){
+    if ($error > 0){
 	  
     $response["success"] = 0;
 	$response["count"] = 0;
@@ -146,8 +144,7 @@ $db->my_sql("DELETE FROM image WHERE matric='".$user_id."' AND active='2'", 1);
 $db->my_sql("UPDATE image SET active='4' WHERE active='1' AND matric='".$user_id."'", 1);
 
 $db->my_sql("INSERT INTO image (matric, image_type, image_size, image_name, image_date, active, privacy, country, caption)
-VALUES ('".$user_id."', '".$file_type."', '".$file_size."', '".$file_name."', NOW(), '".$loc_id."', '".$privacy."',
-'".$my_country."', '".$caption."')", 1);
+VALUES ('".$user_id."', '".$file_type."', '".$file_size."', '".$file_name."', NOW(), '".$loc_id."', '".$privacy."', '".$my_country."', '".$caption."')", 1);
 
  
     $response["success"] = 1;
@@ -249,7 +246,7 @@ return $response;
 
 
 
- function get_photos($folder, $user_id, $page){
+ function get_photos($user_id, $folder, $page){
 	 $db = $this->registry->getObject('database');
 	 
 	 if($page != ""){
@@ -350,7 +347,7 @@ return $response;
  
  
  
-function view_photo($folder, $photo_id){
+function view_photo($photo_id, $folder){
 	 	 $db = $this->registry->getObject('database');
 	 
 	 if($folder == "album"){
@@ -454,7 +451,7 @@ function delete_photo_comment($comment_id){
 }
 
 
-function comment_photo($user_id, $image_id, $comment){
+function comment_photo($image_id, $user_id, $comment){
 	$db = $this->registry->getObject('database');
 	$user = $this->registry->getObject('user_class');
 	
@@ -628,34 +625,15 @@ function photo_info($image_id){
 	// get image_id and owner
 $db->my_sql("SELECT image_id, matric, image_name, rate, active, privacy, DATE_FORMAT(image_date, '%b %e %Y at %r') AS fmt_image_date, caption FROM image WHERE image_id='".$image_id."'");
 
-if($db->num_rows() == 0){
-	$response["success"] = 0;
-	  $response["count"] = $db->num_rows();
-      $response["message"] = "photo does not exist";
-}else{
-
-      $response["success"] = 1;
-	  $response["count"] = $db->num_rows();
-      $response["photo_info"] = $db->get_rows();
-}
-	
-return $response;
-
-}
-
-
-function photo_nav($image_id){
-	$db = $this->registry->getObject('database');
-	$photo = $this->registry->getObject('photo_class');
-	
-	
-	$photo_info_response = $photo->photo_info($image_id);
-	foreach($photo_info_response["photo_info"] as $p){
+foreach($db->get_rows() as $p){
 	$owner = $p["matric"];
 	$active = $p["active"];
 	}
-	
-	// for next and previous
+
+$picscount = $db->num_rows();
+$picsdata = $db->get_rows();
+
+// for next and previous
 	if($active == 1 || $active == 4){
 		$act = "(active='1' OR active='4')";
 	}else{
@@ -675,18 +653,27 @@ function photo_nav($image_id){
 	foreach($db->get_rows() as $p){
 	$prev = $p['image_id'];
 	}
-	
-	 $response["next_count"] = $nexcount;
-	 $response["next_id"] = $next;
-	 $response["previous_count"] = $prevcount;
-	 $response["previous_id"] = $prev;
-		
-	return $response;
-	
+
+if($picscount == 0){
+	$response["success"] = 0;
+	  $response["count"] = $picscount;
+      $response["message"] = "photo does not exist";
+}else{
+
+      $response["success"] = 1;
+	  $response["count"] = $picscount;
+      $response["photo_info"] = $picsdata;
+	  $response["next_count"] = $nexcount;
+	  $response["next_id"] = $next;
+	  $response["previous_count"] = $prevcount;
+	  $response["previous_id"] = $prev;
 }
- 
- 
- 
+	
+return $response;
+
+}
+
+
 
 function photo($property){
 	 return $this->$property;

@@ -72,7 +72,7 @@ return $response;
 }
 
 
-function read_message($user_id, $message_id){
+function read_message($message_id, $user_id){
 	$db = $this->registry->getObject('database');
 	
 	//verify the message exists

@@ -25,6 +25,7 @@ class CampusfamzAuth {
 
 function model($action, $version, $method, $param, $appID, $appKey, $ext, $page){
 	$db = $this->registry->getObject('database');
+	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$auth = $this->registry->getObject('auth_class');
 	
 	// clean and filter the datas sent
@@ -40,7 +41,7 @@ function model($action, $version, $method, $param, $appID, $appKey, $ext, $page)
 	
 	$db->my_sql("SELECT id FROM developers WHERE developer_id='".$appID."' AND developer_key='".$appKey."'");
 	if($db->num_rows() == 0){
-		$this->unauthorized_url(); // call connection error
+		$ErrorParser->unauthorized_url(); // call connection error
 	}else{
 		
 	$db->my_sql("SELECT id, app_name, app_type, active FROM applications WHERE developer_id='".$appID."'");
@@ -59,45 +60,17 @@ function model($action, $version, $method, $param, $appID, $appKey, $ext, $page)
 		if(method_exists($app_type, $method)){
 			$app_type->model($app_id, $action, $method, $param, $ext, $page); // call the api type model
 			
-			header('HTTP/1.1 200 OK');
-			exit();
+			$ErrorParser->success(); // call success message
+			
 		}else{
-			$this->funct_error($method); // call function error
+			$ErrorParser->funct_error($method); // call function error
 		}
 		
 	}else{
-		$this->inactive_app_error($app_name); // inactive app error
+		$ErrorParser->inactive_app_error($app_name); // inactive app error
 	}
 	}
 	
 }
-
-
-
-function connection_error(){
-	header('Error: Could Not Parse Request');
-	header('HTTP/1.1 404 Not Found');	
-	exit();
-}
-
-function unauthorized_url(){
-	header('Error: Unauthorized API Login');
-	header('HTTP/1.1 401 Unauthorized');	
-	exit();
-}
-
-function funct_error($method){
-	header('Error: Method ('.$method.') Not Found');	
-	header('HTTP/1.1 405 Not Found');	
-	exit();
-}
-
-function inactive_app_error($appname){
-	header('WWW-Authenticate: Basic Realm="Campusfamz API Login"');
-	header('Error: Inactive Application ('.$appname.')');	
-	header('HTTP/1.1 422 Unprocessable Entry');	
-	exit();
-}
-
 }
 ?>

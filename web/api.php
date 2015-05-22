@@ -15,29 +15,22 @@ if(isset($_GET['ver'])){
 	
 }
 
+// check if it is someone trying to access the api doc page
+if(isset($function) && isset($_SERVER['PHP_AUTH_USER'])){// its a full request, CONTINUE
+$apiAuth->model($_SERVER['REQUEST_METHOD'], $version, $function, $param, $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], $_GET['ext'], $_GET['page']);
+exit;
+// return the whole process
+
+}else{ // it is not a full request, SHOW THE API DOC PAGE
 
 if(!isset($version)){
 	$version = "v1";
 	header ('location: '.API_URL.'api/'.$version.'');
 		echo '<script type="text/javascript">document.location = "'.API_URL.'api/'.$version.'";
     </script>';exit;
-}elseif(isset($function) && isset($param) && !isset($_SERVER['PHP_AUTH_PW'])){
-	header ('location: '.API_URL.'api/'.$version.'');
-		echo '<script type="text/javascript">document.location = "'.API_URL.'api/'.$version.'";
-    </script>';exit;
-	
 }else{
 	
 }
-
-
-// check if it is someone trying to access the api doc page
-if(isset($function) && isset($param) && isset($_SERVER['PHP_AUTH_USER'])){// its a full request, CONTINUE
-$apiAuth->model($_SERVER['REQUEST_METHOD'], $version, $function, $param, $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], $_GET['ext'], $_GET['page']);
-exit;
-// return the whole process
-
-}else{ // it is not a full request, SHOW THE API DOC PAGE
 include("indexhead.php");	
 ?>
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">

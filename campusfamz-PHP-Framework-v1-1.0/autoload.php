@@ -39,6 +39,8 @@ $registry->createAndStoreObject('mail_class', 'mail_class', 'Classes');
 $registry->createAndStoreObject('pagination_class', 'pagination_class', 'Classes');
 $registry->createAndStoreObject('CampusfamzAuth', 'CampusfamzAuth', 'Campusfamz');
 $registry->createAndStoreObject('Campusfamz', 'Campusfamz', 'Campusfamz');
+$registry->createAndStoreObject('Functions', 'Functions', 'Campusfamz');
+$registry->createAndStoreObject('ErrorParser', 'ErrorParser', 'Campusfamz');
 $registry->createAndStoreObject('Developers', 'Developers', 'Campusfamz');
 $registry->createAndStoreObject('Web', 'Web', 'Campusfamz');
 

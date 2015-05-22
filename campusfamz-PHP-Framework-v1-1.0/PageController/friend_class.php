@@ -151,9 +151,18 @@ function famz_friend($user_id, $friend_id){
 		  $response["success"] = 1; // success in famzing the two friends
 	  
 
- $db->my_sql("INSERT INTO friends (my_matric, my_friend_matric, active, time) VALUES ('".$user_id."', '".$friend_id."', '5', now())", 1);
+ $db->my_sql("INSERT INTO friends (my_matric, my_friend_matric, active, time) VALUES ('".$user_id."', '".$friend_id."', '1', now())", 1);
 // for user notification
-$db->my_sql("INSERT INTO friends_notification (mymatric, friendmatric, active, time) VALUES ('".$user_id."', '".$friend_id."', '5', now())", 1);$response["message"] = "<span style='color:red'><input type='button' class='but' style='background-color:#ABABD6' disabled value='Friend Request Sent' /></span><br>";
+$db->my_sql("INSERT INTO friends_notification (mymatric, friendmatric, active, time) VALUES ('".$user_id."', '".$friend_id."', '1', now())", 1);
+
+$db->my_sql("SELECT id FROM friends WHERE my_matric='".$friend_id."'' AND my_friend_matric='".$user_id."' AND active='1'");
+
+if($db->num_rows() == 1){
+	// get my username to add to the mail
+$fr_info_response = $user->profile_info($friend_id);
+$fr_user = $fr_info_response["username"];
+$response["message"] = "you are now friends with $fr_user";
+}
 
 //formail
 // get my friend username and email to send the email
@@ -169,7 +178,7 @@ $mail->friend_famz_mail($padi_mail, $padi_user, $my_user);
 	  }
 	  else{ // daily requests exceeded display the error
 	$response["success"] = 0; // failure in adding the two friends 
-	$response["message"] = "error famzing friend";
+	$response["message"] = "error famzing friend, daily famz limit exceeded";
 	  }
 	  
 	  return $response;
@@ -179,10 +188,11 @@ $mail->friend_famz_mail($padi_mail, $padi_user, $my_user);
 function unfamz_friend($user_id, $friend_id){
 	 $db = $this->registry->getObject('database');
 	 
-	 $db->my_sql("DELETE FROM friends WHERE my_matric='".$user_id."' AND my_friend_matric='".$friend_id."' AND active='5'", 1);
-	 $db->my_sql("DELETE FROM friends_notification WHERE mymatric='".$user_id."' AND friendmatric='".$friend_id."' AND active='5'", 1);
+	 $db->my_sql("DELETE FROM friends WHERE my_matric='".$user_id."' AND my_friend_matric='".$friend_id."' AND active='1'", 1);
+	 $db->my_sql("DELETE FROM friends_notification WHERE mymatric='".$user_id."' AND friendmatric='".$friend_id."' AND active='1'", 1);
 	 
-	 $response["success"] = 1; // success in un-famzing the two friends$response["message"] = "friend un-famzed successfully";
+	 $response["success"] = 1; // success in un-famzing the two friends
+	 $response["message"] = "friend un-famzed successfully";
 	 
 	 return $response;
 		

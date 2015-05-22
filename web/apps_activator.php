@@ -1,7 +1,7 @@
 <div class="main-nav-icon">
 <a href="#" onclick="viewMainApps()" class="right_bt" id="activator" title="Apps"><span> </span> </a> 
 <?php
-$response = $campusfamz->get('profile_info', $_SESSION['cfuser']);
+$response = $campusfamz->get('profiles', $_SESSION['cfuser']);
 $my_profile_pics_link = $response['image_url'];
 $my_username = $response['username'];
 ?>

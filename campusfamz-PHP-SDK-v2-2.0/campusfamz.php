@@ -13,7 +13,7 @@
   * proper functioning of the software.  
 */
 
-define("API_ADDR", "127.0.0.1/cfapi"); // do not change this!
+define("API_ADDR", "http://127.0.0.1/cfapi"); // do not change this!
 		
 class CFapi{
 	
@@ -21,7 +21,7 @@ function get($function, $param, $ext, $page){
 		global $curl;
 		include 'key.php';
 
-    $api_url = "http://".API_ADDR."/api/v2/".$function."/".$param."/"; 
+    $api_url = API_ADDR."/api/v2/".$function."/".$param."/"; 
 	$api_url = $api_url."?ext=".$ext."&page=".$page."";	
 	
 	$curl = curl_init();
@@ -30,6 +30,8 @@ function get($function, $param, $ext, $page){
 	curl_setopt($curl, CURLOPT_USERPWD, $appId.':'.$appKey);
 	curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json'));
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
 	 $response = $this->execute($curl);
 	 
@@ -44,11 +46,18 @@ function get($function, $param, $ext, $page){
 }
 	
 	
-function post($function, $data){	
+function post($function, $param, $data, $ext){	
         global $curl;
 		include 'key.php';
+		
+		if(!is_array($param)){
+			$data = $data;
+		}else{
+			$data = $param;
+		}
 
-    $api_url = "http://".API_ADDR."/api/v2/".$function."/".$param."/"; 	  
+    $api_url = API_ADDR."/api/v2/".$function."/".$param."/";	
+	$api_url = $api_url."?ext=".$ext."";  
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, $api_url); 
     curl_setopt($curl, CURLOPT_HEADER, 1);
@@ -57,7 +66,9 @@ function post($function, $data){
 	curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json'));
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 	
      $response = $this->execute($curl);
 	
@@ -70,11 +81,18 @@ function post($function, $data){
 }
 	
 	
-function put($function, $param, $data){	
+function put($function, $param, $data, $ext){	
 		global $curl;
 		include 'key.php';
+		
+		if(!is_array($param)){
+			$data = $data;
+		}else{
+			$data = $param;
+		}
 
-    $api_url = "http://".API_ADDR."/api/v2/".$function."/".$param."/"; 	
+    $api_url = API_ADDR."/api/v2/".$function."/".$param."/"; 
+	$api_url = $api_url."?ext=".$ext."";	
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, $api_url);      
     curl_setopt($curl, CURLOPT_HEADER, 1);
@@ -83,7 +101,9 @@ function put($function, $param, $data){
 	curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json'));
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		
 
 	 $response = $this->execute($curl);
@@ -97,11 +117,18 @@ function put($function, $param, $data){
 }
 	
 	
-function delete($function, $param, $data){	
+function delete($function, $param, $data, $ext){	
 		global $curl;
 		include 'key.php';
+		
+		if(!is_array($param)){
+			$data = $data;
+		}else{
+			$data = $param;
+		}
 
-    $api_url = "http://".API_ADDR."/api/v2/".$function."/".$param."/"; 	
+    $api_url = API_ADDR."/api/v2/".$function."/".$param."/";
+	$api_url = $api_url."?ext=".$ext."";	
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, $api_url);     
     curl_setopt($curl, CURLOPT_HEADER, 1);
@@ -109,8 +136,8 @@ function delete($function, $param, $data){
 	curl_setopt($curl, CURLOPT_USERPWD, $appId.':'.$appKey);
 	curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POST, true);
-	curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json'));
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		
 
 	 $response = $this->execute($curl);
