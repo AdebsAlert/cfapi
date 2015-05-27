@@ -65,7 +65,7 @@ function post($function, $param, $data, $ext){
 	curl_setopt($curl, CURLOPT_USERPWD, $appId.':'.$appKey);
 	curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POST, true);
+	curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
 	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json'));
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -91,22 +91,19 @@ function put($function, $param, $data, $ext){
 			$data = $param;
 		}
 
-    $api_url = API_ADDR."/api/v2/".$function."/".$param."/"; 
-	$api_url = $api_url."?ext=".$ext."";	
+    $api_url = API_ADDR."/api/v2/".$function."/".$param."/";	
+	$api_url = $api_url."?ext=".$ext."";  
 	$curl = curl_init();
-	curl_setopt($curl, CURLOPT_URL, $api_url);      
+	curl_setopt($curl, CURLOPT_URL, $api_url); 
     curl_setopt($curl, CURLOPT_HEADER, 1);
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 	curl_setopt($curl, CURLOPT_USERPWD, $appId.':'.$appKey);
 	curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json'));
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		
-
-	 $response = $this->execute($curl);
+	
+     $response = $this->execute($curl);
 	
 	 if ($response["responseCode"] == 200) {
       return json_decode($response["body"], true); 
@@ -136,8 +133,9 @@ function delete($function, $param, $data, $ext){
 	curl_setopt($curl, CURLOPT_USERPWD, $appId.':'.$appKey);
 	curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json'));
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	
 		
 
 	 $response = $this->execute($curl);

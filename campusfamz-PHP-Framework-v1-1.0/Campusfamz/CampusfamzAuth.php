@@ -19,11 +19,19 @@ class CampusfamzAuth {
 	
 	protected $registry;
  public function __CONSTRUCT (registry $registry){
+        header("Access-Control-Allow-Orgin: *");
+        header("Access-Control-Allow-Methods: *");
+		
+		if(isset($_SERVER['PHP_AUTH_USER'])){
+		header("Content-Type: application/json");
+		}
+		
 	 $this->registry = $registry;
  }
 
 
-function model($action, $version, $method, $param, $appID, $appKey, $ext, $page){
+function model($action, $version, $method, $param, $ext, $page, $appID, $appKey){
+	
 	$db = $this->registry->getObject('database');
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$auth = $this->registry->getObject('auth_class');
@@ -58,7 +66,13 @@ function model($action, $version, $method, $param, $appID, $appKey, $ext, $page)
 	
 		
 		if(method_exists($app_type, $method)){
-			$app_type->model($app_id, $action, $method, $param, $ext, $page); // call the api type model
+			
+			//check if method is PUT OR DELETE and process the datas
+			if($action == "PUT" || $action == "DELETE"){
+				parse_str(file_get_contents("php://input"), $parsed_args);
+			}
+			
+			$app_type->model($app_id, $action, $method, $param, $ext, $page, $parsed_args); // call the api type model
 			
 			$ErrorParser->success(); // call success message
 			

@@ -1,11 +1,4 @@
 <?php
-error_reporting(0); session_start();
-$array_url = split("/", $_SERVER['REQUEST_URI']); // get page model
-$page = explode(".php", $array_url[2]); // change 2 to 1 in live server
-$version = $array_url[3]; // change this 3 to 2 in live server
-$function = $array_url[4]; // change this 4 to 3 in live server
-$param = $array_url[5]; // change this 5 to 4 in live server
-
 // work on the version changing
 if(isset($_GET['ver'])){
 	header ('location: '.API_URL.'api/'.$_GET['ver'].'');
@@ -15,9 +8,10 @@ if(isset($_GET['ver'])){
 	
 }
 
+
 // check if it is someone trying to access the api doc page
 if(isset($function) && isset($_SERVER['PHP_AUTH_USER'])){// its a full request, CONTINUE
-$apiAuth->model($_SERVER['REQUEST_METHOD'], $version, $function, $param, $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], $_GET['ext'], $_GET['page']);
+$apiAuth->model($_SERVER['REQUEST_METHOD'], $version, $function, $param, $_GET['ext'], $_GET['page'], $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 exit;
 // return the whole process
 

@@ -33,12 +33,22 @@ function login($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		$functions->user_login($param, $ext);
-		exit();
-	}else{
+		break;
+	case 'POST':
 	    $ErrorParser->invalid_method();
-		exit();
+		break;	
+	case 'PUT':
+	    $ErrorParser->invalid_method();
+		break;
+	case 'DELETE':
+	    $ErrorParser->invalid_method();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -47,12 +57,22 @@ function signup($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'POST'){
-		$functions->user_reg($param);
-		exit();
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+	switch($action){	
+	case 'GET':
+		$ErrorParser->invalid_method();
+		break;
+	case 'POST':
+	    $functions->user_reg($param);
+		break;	
+	case 'PUT':
+	    $ErrorParser->invalid_method();
+		break;
+	case 'DELETE':
+	    $ErrorParser->invalid_method();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -61,7 +81,8 @@ function profiles($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		if($ext == ''){
 		       $functions->profile_info($param);
 			   exit();
@@ -71,11 +92,21 @@ function profiles($action, $param, $ext, $page){
 		}else{
 			
 		}
-	}else if($action == 'UPDATE'){
-		
-	}else{
-	$ErrorParser->invalid_method();
+		break;
+	case 'POST':
+	    $ErrorParser->invalid_method();
+		break;	
+	case 'PUT':
+	    $ErrorParser->invalid_method();
+		break;
+	case 'DELETE':
+	    $ErrorParser->invalid_method();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
+	
 }
 
 
@@ -83,7 +114,8 @@ function users($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		if($ext == ''){
 		      
 		}elseif($ext == "suggestion"){
@@ -96,9 +128,9 @@ function users($action, $param, $ext, $page){
 			   $functions->user_list($param, $ext, $page);
 			   exit();
 		}
-		
-	}elseif($action == 'POST'){
-		if($ext == ''){
+		break;
+	case 'POST':
+	    if($ext == ''){
 		      
 		}elseif($ext == "subscribe"){
 		       $functions->subscribe_user($param);
@@ -106,9 +138,16 @@ function users($action, $param, $ext, $page){
 		}else{
 			
 		}
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+		break;	
+	case 'PUT':
+	    $ErrorParser->invalid_method();
+		break;
+	case 'DELETE':
+	    $ErrorParser->invalid_method();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -118,7 +157,8 @@ function search($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		if($ext == ''){
 		       $functions->search_user($param, $ext, $page);
 			   exit();
@@ -126,10 +166,19 @@ function search($action, $param, $ext, $page){
 			   $functions->search_user($param, $ext, $page);
 			   exit();
 		}
-		
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+		break;
+	case 'POST':
+	    $ErrorParser->invalid_method();
+		break;	
+	case 'PUT':
+	    $ErrorParser->invalid_method();
+		break;
+	case 'DELETE':
+	    $ErrorParser->invalid_method();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -138,7 +187,8 @@ function friends($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		if($ext == ''){
 		       $functions->friend_list($param, $ext, $page);
 			   exit();
@@ -159,22 +209,19 @@ function friends($action, $param, $ext, $page){
 			   exit();
 		}else{	
 		}
-		
-	}elseif($action == 'POST'){
-		$functions->famz_friend($param);
-		exit();
-		
-	}elseif($action == 'DELETE'){
-		$functions->unfamz_friend($param);
-		exit();
-		
-	}elseif($action == 'PUT'){
-		$functions->unblock_friend($param);
-		exit();
-		
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+		break;
+	case 'POST':
+	    $functions->famz_friend($param);
+		break;	
+	case 'PUT':
+	    $functions->unblock_friend($param);
+		break;
+	case 'DELETE':
+	    $functions->unfamz_friend($param);
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -183,7 +230,8 @@ function photos($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		if($ext == 'dp'){
 		       $functions->profile_photo($param);
 			   exit();
@@ -206,9 +254,9 @@ function photos($action, $param, $ext, $page){
 			   $functions->get_photos($param, $ext, $page);
 			   exit();
 		}
-		
-	}elseif($action == 'POST'){
-		if($ext == ''){
+		break;
+	case 'POST':
+	    if($ext == ''){
 		      $functions->upload_photo($param);
 			  exit();
 		}elseif($ext == 'rate'){
@@ -222,9 +270,9 @@ function photos($action, $param, $ext, $page){
 			  exit();
 		}else{
 		}
-		
-	}elseif($action == 'PUT'){
-		if($ext == 'caption'){
+		break;	
+	case 'PUT':
+	    if($ext == 'caption'){
 			  $functions->update_photo_caption($param);
 			  exit();
 		}elseif($ext == 'cover'){
@@ -235,9 +283,9 @@ function photos($action, $param, $ext, $page){
 			  exit();
 		}else{
 		}
-		
-	}elseif($action == 'DELETE'){
-		if($ext == 'comment'){
+		break;
+	case 'DELETE':
+	    if($ext == 'comment'){
 			  $functions->delete_photo_comment($param);
 			  exit();
 		}elseif($ext == ''){
@@ -245,10 +293,10 @@ function photos($action, $param, $ext, $page){
 			  exit();
 		}else{
 		}
-		
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -258,7 +306,8 @@ function feeds($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		if($ext == 'user'){
 		       $functions->user_shout($param, $ext, $page);
 			   exit();
@@ -278,9 +327,9 @@ function feeds($action, $param, $ext, $page){
 			$functions->all_shout($param, $ext, $page);
 			exit();
 		}
-		
-	}elseif($action == 'POST'){
-		if($ext == ''){
+		break;
+	case 'POST':
+	    if($ext == ''){
 		      $functions->send_shout($param);
 			  exit();
 		}elseif($ext == "like"){
@@ -297,9 +346,12 @@ function feeds($action, $param, $ext, $page){
 			  exit();
 		}else{
 		}
-		
-	}elseif($action == 'DELETE'){
-		if($ext == ''){
+		break;	
+	case 'PUT':
+	    $ErrorParser->invalid_method();
+		break;
+	case 'DELETE':
+	    if($ext == ''){
 		      $functions->delete_status($param);
 			  exit();
 		}elseif($ext == "unlike"){
@@ -310,9 +362,10 @@ function feeds($action, $param, $ext, $page){
 			  exit();
 		}else{
 		}
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -321,7 +374,8 @@ function messages($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		if($ext == 'read'){
 		       $functions->read_message($param, $ext, $page);
 			   exit();
@@ -331,17 +385,23 @@ function messages($action, $param, $ext, $page){
 		}else{
 			
 		}
-		
-	}elseif($action == 'POST'){
-		if($ext == 'send'){
+		break;
+	case 'POST':
+	    if($ext == 'send'){
 		      $functions->send_message($param);
 			  exit();
 		}else{
 		}
-		
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+		break;	
+	case 'PUT':
+	    $ErrorParser->invalid_method();
+		break;
+	case 'DELETE':
+	    $ErrorParser->invalid_method();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -350,24 +410,31 @@ function admins($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		if($ext == 'check'){
 		       $functions->check_admin($param);
 			   exit();
 		}else{
 			
 		}
-		
-	}elseif($action == 'POST'){
-		if($ext == 'create'){
+		break;
+	case 'POST':
+	    if($ext == 'create'){
 		      $functions->create_admin($param);
 			  exit();
 		}else{
 		}
-		
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+		break;	
+	case 'PUT':
+	    $ErrorParser->invalid_method();
+		break;
+	case 'DELETE':
+	    $ErrorParser->invalid_method();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -376,7 +443,8 @@ function forums($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		if($ext == 'category'){
 		       $functions->topic_listing($param, $ext, $page);
 			   exit();
@@ -398,37 +466,40 @@ function forums($action, $param, $ext, $page){
 		}else{
 			
 		}
-		
-	}elseif($action == 'POST'){
-		if($ext == 'create'){
+		break;
+	case 'POST':
+	    if($ext == 'create'){
 		      $functions->create_topic($param);
 			  exit();
 		}elseif($ext == 'comment'){
 			 $functions->comment_forum($param);
 			 exit();
 		}else{
+			
 		}
-		
-	}elseif($action == 'PUT'){
-		if($ext == ''){
+		break;	
+	case 'PUT':
+	    if($ext == ''){
 		      $functions->update_topic($param);
 			 exit();
 		}else{
 		}
-		
-	}elseif($action == 'DELETE'){
-		if($ext == 'forum'){
+		break;
+	case 'DELETE':
+	    if($ext == 'forum'){
 		      $functions->delete_forum_post($param);
 			  exit();
 		}elseif($ext == 'comment'){
 			 $functions->delete_forum_comment($param);
 			 exit();
 		}else{
+			 $functions->update_topic($param);
+			 exit();
 		}
-		
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -437,31 +508,36 @@ function slides($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	
+		switch($action){	
+	case 'GET':
 		if($ext == ''){
 			   $functions->slide_info($param);
 			   exit();
 		}else{
 			
 		}
-		
-	}elseif($action == 'POST'){
-		if($ext == ''){
+		break;
+	case 'POST':
+	    if($ext == ''){
 		      $functions->upload_slide($param);
 			  exit();
 		}else{
 		}
-		
-	}elseif($action == 'PUT'){
-		if($ext == ''){
+		break;	
+	case 'PUT':
+	    if($ext == ''){
 		      $functions->update_slide($param);
 			  exit();
 		}else{
 		}
-		
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+		break;
+	case 'DELETE':
+	    $ErrorParser->invalid_method();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 
@@ -471,7 +547,8 @@ function developers($action, $param, $ext, $page){
 	$ErrorParser = $this->registry->getObject('ErrorParser');
 	$functions = $this->registry->getObject('Functions');
 	
-	if($action == 'GET'){
+	switch($action){	
+	case 'GET':
 		if($ext == ''){
 			   $functions->getDev($param);
 			   exit();
@@ -481,17 +558,23 @@ function developers($action, $param, $ext, $page){
 		}else{
 			
 		}
-		
-	}elseif($action == 'POST'){
-		if($ext == ''){
+		break;
+	case 'POST':
+	    if($ext == ''){
 		      $functions->registerDev($param);
 			  exit();
 		}else{
 		}
-		
-	}else{
-	$ErrorParser->invalid_method();
-	exit();
+		break;	
+	case 'PUT':
+	    $ErrorParser->invalid_method();
+		break;
+	case 'DELETE':
+	    $ErrorParser->invalid_method();
+		break;
+	default:
+	     $ErrorParser->invalid_method();
+		break;
 	}
 }
 

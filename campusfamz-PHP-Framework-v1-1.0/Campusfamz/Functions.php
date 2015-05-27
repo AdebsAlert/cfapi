@@ -20,6 +20,7 @@
 class Functions {
 	protected $registry;
  public function __CONSTRUCT (registry $registry){
+	 
 	 $this->registry = $registry;
 }
  
@@ -876,20 +877,21 @@ function topic_view($param){
 }
 
 
-function update_topic($param){
+function update_topic($param, $put_vars){
 	$forum = $this->registry->getObject('forum_class');
 	$auth = $this->registry->getObject('auth_class');
 	
+	
 	$topic_id = $auth->filter_data($param);
-	$cat_id = $auth->filter_data($_POST['cat_id']);
-	$topic_title = $auth->filter_data($_POST['topic_title']);
-	$topic_views = $auth->filter_data($_POST['topic_views']);
-	$topic_posts = $auth->filter_data($_POST['topic_posts']);
-	$topic_photo = $auth->filter_data($_POST['topic_photo']);
-	$ext_topic_photo = $auth->filter_data($_POST['ext_topic_photo']);
+	$cat_id = $auth->filter_data($put_vars['cat_id']);
+	$topic_title = $auth->filter_data($put_vars['topic_title']);
+	$topic_views = $auth->filter_data($put_vars['topic_views']);
+	$topic_posts = $auth->filter_data($put_vars['topic_posts']);
+	$topic_photo = $auth->filter_data($put_vars['topic_photo']);
+	$ext_topic_photo = $auth->filter_data($put_vars['ext_topic_photo']);
 	
-	
-	exit(json_encode($cat_id));
+	$response = $forum->update_topic($topic_id, $cat_id, $topic_title, $topic_views, $topic_posts, $topic_photo, $ext_topic_photo);
+	exit(json_encode($response));
 }
 
 

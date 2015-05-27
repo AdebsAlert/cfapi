@@ -28,16 +28,9 @@ function success(){
 	exit();
 }
 
-
-function invalid_method(){
-	header('Error: Could Not Parse Request');
-	header('HTTP/1.1 404 Not Found');	
-	exit();
-}
-
 function connection_error(){
 	header('Error: Could Not Parse Request');
-	header('HTTP/1.1 404 Not Found');	
+	header('HTTP/1.1 400 Bad Request');	
 	exit();
 }
 
@@ -49,7 +42,13 @@ function unauthorized_url(){
 
 function funct_error($method){
 	header('Error: Method ('.$method.') Not Found');	
-	header('HTTP/1.1 405 Not Found');	
+	header('HTTP/1.1 404 Not Found');	
+	exit();
+}
+
+function invalid_method(){
+	header('Error: Could Not Parse Request');
+	header('HTTP/1.1 405 Method Not Allowed');	
 	exit();
 }
 

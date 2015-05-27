@@ -11,7 +11,6 @@
   * Autoload all the class
   * Call the class name from anywhere in your pages
 */
-
 function __autoload($class){ // autoload classes
 $path = FRAMEWORK_PATH."Registry/".$class.".php";
 if (file_exists($path)) {
@@ -38,11 +37,12 @@ $registry->createAndStoreObject('developer_class', 'developer_class', 'PageContr
 $registry->createAndStoreObject('mail_class', 'mail_class', 'Classes');
 $registry->createAndStoreObject('pagination_class', 'pagination_class', 'Classes');
 $registry->createAndStoreObject('CampusfamzAuth', 'CampusfamzAuth', 'Campusfamz');
-$registry->createAndStoreObject('Campusfamz', 'Campusfamz', 'Campusfamz');
 $registry->createAndStoreObject('Functions', 'Functions', 'Campusfamz');
 $registry->createAndStoreObject('ErrorParser', 'ErrorParser', 'Campusfamz');
-$registry->createAndStoreObject('Developers', 'Developers', 'Campusfamz');
-$registry->createAndStoreObject('Web', 'Web', 'Campusfamz');
+
+$registry->createAndStoreObject('Campusfamz', 'Campusfamz', 'Campusfamz/'.$version.'');
+$registry->createAndStoreObject('Developers', 'Developers', 'Campusfamz/'.$version.'');
+$registry->createAndStoreObject('Web', 'Web', 'Campusfamz/'.$version.'');
 
 
 $db = $registry->getObject('database');

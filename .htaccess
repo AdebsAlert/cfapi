@@ -2,11 +2,21 @@
 deny from all
 </Files>
 
+<Limit GET POST PUT DELETE>
+order deny,allow
+allow from all
+</Limit>
+
 <ifModule mod_deflate.c>
     <filesMatch "\.(js|css|html|php)$">
         SetOutputFilter DEFLATE
     </filesMatch>
 </ifModule>
+
+# Enable gzip compression
+    <ifModule filter_module>
+        AddOutputFilterByType DEFLATE application/json
+    </ifModule>
 
 ErrorDocument 404 /index.php
 DirectoryIndex index.php
